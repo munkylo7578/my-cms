@@ -115,7 +115,7 @@
   });
   //表单
   const [registerForm, { validate }] = useForm({
-    schemas: [{ field: 'type', component: 'Input', label: '类型' }],
+    schemas: [{ field: 'type', component: 'Input', label: '类型', }],
     labelWidth: 80,
     baseColProps: { span: 6 },
     actionColOptions: { span: 24 },

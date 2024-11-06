@@ -78,11 +78,21 @@ export function useFormValues({
       if (isString(value)) {
         value = value.trim();
       }
+
       if (!tryDeconstructArray(key, value, res) && !tryDeconstructObject(key, value, res)) {
         // 没有解构成功的，按原样赋值
         set(res, key, value);
       }
     }
+    const schemas = unref(getSchema);
+    const test = schemas.filter((schema) => schema.component === 'CustomRange');
+    test?.forEach((itemTest) => {
+      const temp = get(res, itemTest.field) as string[];
+      if (temp) {
+        const modifiedTemp = temp.map((item) => item.replace('child-', ''));
+        set(res, itemTest.field, modifiedTemp);
+      }
+    });
     return handleRangeTimeValue(res);
   }
 

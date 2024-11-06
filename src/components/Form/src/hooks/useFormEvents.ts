@@ -148,6 +148,12 @@ export function useFormEvents({
         validKeys.push(key);
         return;
       }
+      if (schema?.component === 'CustomRange') {
+        constructValue = get(value, key);
+        const fieldValue = constructValue || (value as string[]);
+        unref(formModel)[key] = fieldValue.map((item) => 'child-' + item);
+        return;
+      }
       // Adapt common component
       if (hasKey) {
         constructValue = get(value, key);

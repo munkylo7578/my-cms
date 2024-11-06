@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { Drawer, Space } from 'ant-design-vue';
   import { BasicForm, type FormSchema, useForm, type FormProps } from '@/components/Form';
   import { CollapseContainer } from '@/components/Container';
@@ -61,6 +61,36 @@
   ];
 
   const schemas: FormSchema[] = [
+    {
+      field: 'test',
+      component: 'CustomRange',
+
+      label: 'Ngay hom nay',
+      colProps: { span: 8 },
+
+      componentProps: {
+        treeData: [
+          {
+            label: 'IT',
+            value: 1,
+            children: [
+              {
+                label: 'Nam',
+                value: 1,
+              },
+              {
+                label: 'Tuan',
+                value: 2,
+              },
+              {
+                label: 'Hai',
+                value: 3,
+              },
+            ],
+          },
+        ],
+      },
+    },
     {
       field: 'field1',
       component: 'Input',
@@ -484,8 +514,10 @@
     setProps(formProps);
     open.value = false;
   };
-
+  onMounted(() => {
+    setFieldsValue({ test: [1] });
+  });
   function handleSubmit(values) {
-    console.log(values);
+    debugger;
   }
 </script>

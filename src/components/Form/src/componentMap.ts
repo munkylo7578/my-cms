@@ -34,9 +34,11 @@ import { IconPicker } from '@/components/Icon';
 import { CountdownInput } from '@/components/CountDown';
 import { BasicTitle } from '@/components/Basic';
 import { CropperAvatar } from '@/components/Cropper';
+import DateRangePicker from './components/DateRangePicker.vue';
 
 const componentMap = new Map<ComponentType | string, Component>();
 
+componentMap.set('CustomRange',DateRangePicker)
 componentMap.set('Input', Input);
 componentMap.set('InputGroup', Input.Group);
 componentMap.set('InputPassword', Input.Password);
