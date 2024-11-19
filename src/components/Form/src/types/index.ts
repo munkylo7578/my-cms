@@ -101,6 +101,7 @@ type ExtractPropTypes<T extends Component> = T extends new (...args: any) => any
 
 interface _CustomComponents {
   ApiSelect: ExtractPropTypes<(typeof import('../components/ApiSelect.vue'))['default']>;
+  InputMaska: ExtractPropTypes<(typeof import('../components/InputMaska.vue'))['default']>;
   ApiTree: ExtractPropTypes<(typeof import('../components/ApiTree.vue'))['default']>;
   ApiTreeSelect: ExtractPropTypes<(typeof import('../components/ApiTreeSelect.vue'))['default']>;
   ApiRadioGroup: ExtractPropTypes<(typeof import('../components/ApiRadioGroup.vue'))['default']>;
@@ -164,6 +165,7 @@ export interface ComponentProps {
   StrengthMeter: CustomComponents['StrengthMeter'] & ComponentProps['InputPassword'];
   Upload: CustomComponents['Upload'];
   ImageUpload: CustomComponents['ImageUpload'];
+  InputMaska: CustomComponents['InputMaska'];
   IconPicker: CustomComponents['IconPicker'];
   Render: Record<string, any>;
   Slider: ExtractPropTypes<(typeof import('ant-design-vue/es/slider'))['default']>;

@@ -27,6 +27,7 @@ import ApiSelect from './components/ApiSelect.vue';
 import ApiTree from './components/ApiTree.vue';
 import ApiTreeSelect from './components/ApiTreeSelect.vue';
 import ApiCascader from './components/ApiCascader.vue';
+import InputMaska from './components/InputMaska.vue';
 import ApiTransfer from './components/ApiTransfer.vue';
 import { BasicUpload, ImageUpload } from '@/components/Upload';
 import { StrengthMeter } from '@/components/StrengthMeter';
@@ -38,6 +39,7 @@ import { CropperAvatar } from '@/components/Cropper';
 const componentMap = new Map<ComponentType | string, Component>();
 
 componentMap.set('Input', Input);
+componentMap.set('InputMaska', InputMaska);
 componentMap.set('InputGroup', Input.Group);
 componentMap.set('InputPassword', Input.Password);
 componentMap.set('InputSearch', Input.Search);

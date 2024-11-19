@@ -19,7 +19,7 @@
   </PageWrapper>
 </template>
 <script lang="tsx" setup>
-  import { h } from 'vue';
+  import { h, onMounted } from 'vue';
   import { BasicForm, FormSchema, useForm } from '@/components/Form';
   import { CollapseContainer } from '@/components/Container';
   import { useMessage } from '@/hooks/web/useMessage';
@@ -39,6 +39,12 @@
     ];
   };
   const schemas: FormSchema[] = [
+    {
+      required: true,
+      field: 'testttt',
+      component: 'InputMaska',
+      label: 'Maskaaa',
+    },
     {
       field: 'field1',
       component: 'Input',
@@ -220,7 +226,7 @@
   ];
   const { createMessage } = useMessage();
 
-  const [register] = useForm({
+  const [register, { setFieldsValue }] = useForm({
     labelWidth: 120,
     schemas,
     actionColOptions: {
@@ -232,6 +238,9 @@
     console.log('submit values', values);
     createMessage.success('click search,values:' + JSON.stringify(values));
   }
+  onMounted(() => {
+    setFieldsValue({ testttt: 2000000 });
+  });
 </script>
 <style lang="less" scoped>
   :deep(.local_form) .local_typeValue {
