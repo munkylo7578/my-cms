@@ -31,6 +31,7 @@
     '原因9',
     '原因10',
   ];
+
   onMounted(() => {
     setOptions({
       backgroundColor: '#0f375f',
@@ -63,6 +64,7 @@
           },
         },
       ],
+
       grid: [{ left: '50%', top: '7%', width: '45%', height: '90%' }],
       tooltip: {
         formatter: '{b} ({c})',

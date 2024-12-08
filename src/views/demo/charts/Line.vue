@@ -5,6 +5,85 @@
   import { PropType, ref, Ref, onMounted } from 'vue';
   import { useECharts } from '@/hooks/web/useECharts';
   import { getLineData } from './data';
+  import 'reflect-metadata';
+
+  function GraphQLField(): PropertyDecorator {
+    return (target, propertyKey) => {
+      const fields = Reflect.getMetadata('graphql:fields', target) || [];
+      fields.push(propertyKey.toString());
+      Reflect.defineMetadata('graphql:fields', fields, target);
+    };
+  }
+  function GraphQLNested(type: () => any): PropertyDecorator {
+    return (target, propertyKey) => {
+      const nestedFields = Reflect.getMetadata('graphql:nestedFields', target) || {};
+      nestedFields[propertyKey.toString()] = type;
+      Reflect.defineMetadata('graphql:nestedFields', nestedFields, target);
+    };
+  }
+  function generateFields(classInstance: Object): string {
+    const fields = Reflect.getMetadata('graphql:fields', classInstance) || [];
+    const nestedFields = Reflect.getMetadata('graphql:nestedFields', classInstance) || {};
+
+    const fieldsString = fields.map((field: string) => field).join(' ');
+
+    const nestedFieldsString = Object.entries(nestedFields)
+      .map(([key, nestedType]: [string, any]) => {
+        const NestedClass = nestedType();
+        const nestedInstance = new NestedClass();
+        return `${key} { ${generateFields(nestedInstance)} }`;
+      })
+      .join(' ');
+
+    return `${fieldsString} ${nestedFieldsString}`.trim();
+  }
+  class Test {
+    @GraphQLField()
+    hello!: string;
+  }
+  class Address {
+    @GraphQLField()
+    street!: string;
+
+    @GraphQLField()
+    city?: string;
+
+    @GraphQLField()
+    country!: string;
+
+    @GraphQLNested(() => Test)
+    test?: Test;
+  }
+  class User {
+    @GraphQLField()
+    id!: string;
+
+    @GraphQLField()
+    name!: string;
+
+    @GraphQLNested(() => Address)
+    addresses!: Address[];
+  }
+
+  function generateGraphQLQuery(
+    classInstance: Object,
+    operation: 'query' | 'mutation',
+    operationName: string,
+  ): string {
+    const className = classInstance.constructor.name.toLowerCase();
+    const fieldsString = generateFields(classInstance);
+
+    return `
+    ${operation} ${operationName} {
+      ${className} {
+        ${fieldsString}
+      }
+    }
+  `;
+  }
+  const user = new User();
+  const query = generateGraphQLQuery(user, 'query', 'GetUser');
+  console.log(query, 'hehehee');
 
   defineProps({
     width: {

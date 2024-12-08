@@ -72,6 +72,14 @@ const charts: AppRouteModule = {
             title: t('routes.demo.charts.pie'),
           },
         },
+        {
+          path: 'StackHorizontal',
+          name: 'StackHorizontal',
+          component: () => import('@/views/demo/charts/StackHorizontal.vue'),
+          meta: {
+            title: t('routes.demo.StackHorizontal.pie'),
+          },
+        },
       ],
     },
   ],
